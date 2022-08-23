@@ -5,7 +5,7 @@ pipeline {
 registryCredential = 'dockerhub'
 
 }
-  agent docker
+  agent any
   stages {
     stage('Clone') {
       steps {
