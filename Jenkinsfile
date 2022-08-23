@@ -14,6 +14,8 @@ node{
     }
 
     stage('Build image') {
+
+        sh 'docker run -u 0 --privileged --name jenkins -d -p 8080:8080 -p 50000:50000 -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts'
   
        app = docker.build("ansosh017/k8test", "--build-arg JAR_FILE=build/libs/kn8s-shield-0.0.1-SNAPSHOT.jar" )
     }
