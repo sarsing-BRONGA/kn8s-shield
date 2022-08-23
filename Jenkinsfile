@@ -15,7 +15,7 @@ node {
 
     stage('Build image') {
   
-       app = docker.build("ansosh017/k8test", "--build-arg JAR_FILE=build/libs/\*.jar" )
+       app = docker.build("ansosh017/k8test", "--build-arg JAR_FILE=build/libs/kn8s-shield-0.0.1-SNAPSHOT.jar" )
     }
 
     stage('Test image') {
