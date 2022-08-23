@@ -1,4 +1,4 @@
-node {
+node('docker') {
     def app
 
     stage('Clone repository') {
@@ -9,7 +9,7 @@ node {
 
     stage('Gradle Build') {
 
-    sh './gradlew bootJar'
+    sh './gradlew clean build'
   
     }
 
