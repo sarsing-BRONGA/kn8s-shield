@@ -9,7 +9,7 @@ node {
 
     stage('Gradle Build') {
 
-    sh './gradlew clean build'
+    sh './gradlew bootJar'
   
     }
 
