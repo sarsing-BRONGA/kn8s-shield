@@ -36,7 +36,7 @@ registryCredential = 'dockerhub'
     stage('Clone') {
       steps {
         container('gradle') {
-          git branch: 'main', changelog: false, poll: false, url: 'https://github.com/sarsing-BRONGA/kn8s-shield.git',credentialsId: 'gitHub'
+          git branch: 'master', changelog: false, poll: false, url: 'https://github.com/sarsing-BRONGA/kn8s-shield.git',credentialsId: 'gitHub'
         }
       }
     }  
