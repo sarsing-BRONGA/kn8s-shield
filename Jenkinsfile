@@ -1,4 +1,4 @@
-node('pipes-docker-agent') {
+node {
     def app
 
     stage('Clone repository') {
