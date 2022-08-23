@@ -1,51 +1,41 @@
 pipeline {
-
-    environment {
-
-registryCredential = 'dockerhub'
-
-}
+  environment {
+    imagename = "ansosh017/K8test"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+  }
   agent any
   stages {
-    stage('Clone') {
+    stage('Cloning Git') {
       steps {
-        container('gradle') {
-          git branch: 'master', changelog: false, poll: false, url: 'https://github.com/sarsing-BRONGA/kn8s-shield.git',credentialsId: 'gitHub'
-        }
-      }
-    }  
-    stage('Build-Jar-file') {
-      steps {
-        container('gradle') {
-          sh './gradlew clean build'
-        }
+        git([url: 'https://github.com/sarsing-BRONGA/kn8s-shield.git', branch: 'master', credentialsId: 'github'])
+
       }
     }
-    stage('Build-Docker-Image') {
-      steps {
-        container('docker') {
-          sh 'docker build -t ansosh017/k8new:latest .'
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build imagename
         }
       }
     }
-    stage('Login-Into-Docker') {
-      steps {
-        container('docker') {
-         script {
-        docker.withRegistry( '', registryCredential ) {
-        dockerImage.push("ansosh017/k8new:latest")
-        }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push("$BUILD_NUMBER")
+             dockerImage.push('latest')
+
+          }
         }
       }
     }
+    stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $imagename:$BUILD_NUMBER"
+         sh "docker rmi $imagename:latest"
+
+      }
     }
- 
   }
-    post {
-      always {
-        container('docker') {
-          sh 'docker logout'
-      }
-      }
-    }
 }
