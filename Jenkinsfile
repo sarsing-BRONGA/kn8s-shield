@@ -9,13 +9,13 @@ node {
 
     stage('Gradle Build') {
 
-    buildInfo = rtGradle.run rootDir: "/", buildFile: 'build.gradle', tasks: 'clean jar'
+    sh './gradlew clean build'
   
     }
 
     stage('Build image') {
   
-       app = docker.build("ansosh017/k8test")
+       app = docker.build("ansosh017/k8test", "--build-arg JAR_FILE=build/libs/\*.jar" )
     }
 
     stage('Test image') {
