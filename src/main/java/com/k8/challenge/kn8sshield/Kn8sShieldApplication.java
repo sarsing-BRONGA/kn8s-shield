@@ -8,6 +8,7 @@ public class Kn8sShieldApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Kn8sShieldApplication.class, args);
+		//TestApp
 	}
 
 }
